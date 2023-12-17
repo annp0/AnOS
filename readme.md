@@ -1,6 +1,9 @@
 # AnOS: A Unix General Purpose Operation System
 
-## Compilation and Running
+This project is in early development.
 
-- Compilation toolchain: `riscv-64-linux-gnu`
-- Emulator: `qemu`. I do not plan to write a BIOS, and I will let `qemu` directly jump to the kernel.
+To run this kernel in the `qemu` emulator, run
+
+```
+make run
+```

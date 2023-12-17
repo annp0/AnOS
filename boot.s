@@ -1,6 +1,6 @@
 .section .data
 
-msg_boot: .ascii "power on\n\0"
+msg_boot: .ascii "Power On\n\0"
 
 .section .text
 .global _entry
@@ -18,6 +18,9 @@ _entry:
     mul a0, a0, a1
     add sp, sp, a0
     call start
+
+spin:
+    j spin
 
 _uart_write:
     li t1, 0x10000000

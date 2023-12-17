@@ -11,5 +11,8 @@ boot.o:
 start.o:
 	$(CC) -c start.c -o start.o
 
-cleanup:
+clean:
 	rm -rf *.o *.elf
+
+run: clean kernel
+	qemu-system-riscv64 -machine virt -cpu rv64 -smp 4 -m 128M -nographic -serial mon:stdio -bios none -kernel kernel.elf
