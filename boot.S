@@ -1,21 +1,25 @@
 .section .data
 
-msg_boot: .ascii "Booting..."
+msg_boot: .ascii "power on\n\0"
 
 .section .text
 .global _entry
 
 _entry:
-    /* csr read mhartid into temporary register t0 */
     csrr t0, mhartid
-    bnez t0, _wait
+    bnez t0, _start
     la a0, msg_boot
     call _uart_write
-    wfi
+    /*  sp = stack0 + ((hartid + 1) * 4096) */
+    la sp, stack
+    li a0, 4096
+    csrr a1, mhartid
+    addi a1, a1, 1
+    mul a0, a0, a1
+    add sp, sp, a0
+    call start
 
 _uart_write:
-    /* li is used to load constant integer value */
-    /* uart_address: 0x10000000 */
     li t1, 0x10000000
     lb t2, (a0)
     beq t2, zero, _uart_write_end
@@ -27,5 +31,5 @@ _uart_write:
 _uart_write_end:
     ret
 
-_wait:
-    wfi
+_start:
+    call start
