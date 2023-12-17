@@ -3,3 +3,7 @@
 #include "param.h"
 
 char stack[4096 * NCPU];
+
+void start(){
+    
+};
